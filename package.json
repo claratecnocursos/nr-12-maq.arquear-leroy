@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/claratecnocursos/nr-12-maq-arquear-leroy.git"
+    "url": "git+https://github.com/claratecnocursos/nr-12-maq.arquear-leroy.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/claratecnocursos/nr-12-maq-arquear-leroy/issues"
+    "url": "https://github.com/claratecnocursos/nr-12-maq.arquear-leroy/issues"
   },
-  "homepage": "https://github.com/claratecnocursos/nr-12-maq-arquear-leroy#readme",
+  "homepage": "https://claratecnocursos.github.io/nr-12-maq.arquear-leroy/",
   "dependencies": {
     "jsdom": "^29.1.1"
   }
