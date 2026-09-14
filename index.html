@@ -10076,36 +10076,108 @@
             }
           }
 
-          @media screen and (max-width: 768px) and (orientation: portrait) {
-            #s6 .slide-title { font-size: 22px !important; margin-top: 4px !important; }
-            #s6 .content-area { padding: 6px 14px 76px !important; }
-            #s6 .sum-grid {
+          @media screen and (max-width: 900px) {
+            #s6 {
+              overflow: hidden !important;
+            }
+            #s6 .wave { display: none !important; }
+            #s6 .top-bar {
+              padding-bottom: 0 !important;
+            }
+            #s6 .slide-title {
+              font-size: 22px !important;
+              margin-top: 2px !important;
+              line-height: 1.15 !important;
+            }
+            #s6 .content-area {
+              display: flex !important;
               flex-direction: column !important;
-              flex-wrap: nowrap;
-              gap: 7px !important;
-              height: 100%;
+              overflow: hidden !important;
+              justify-content: flex-start !important;
+              align-items: stretch !important;
+              padding: 8px 14px 10px !important;
+            }
+            #s6 .sum-grid {
+              display: flex !important;
+              flex: 1 1 0 !important;
+              flex-direction: column !important;
+              flex-wrap: nowrap !important;
+              justify-content: stretch !important;
+              align-items: stretch !important;
+              height: auto !important;
+              max-height: none !important;
+              min-height: 0 !important;
+              gap: 12px !important;
               max-width: 100% !important;
+              overflow: hidden !important;
             }
             #s6 .sum-item {
-              flex: 1 1 0;
+              display: flex !important;
+              flex: 1 1 0 !important;
               width: 100% !important;
-              max-width: none;
-              min-height: 0;
-              padding: 8px 12px !important;
-              gap: 4px !important;
-              border-radius: 12px !important;
+              max-width: none !important;
+              min-height: 0 !important;
+              height: auto !important;
+              padding: 18px 16px !important;
+              gap: 10px !important;
+              border-radius: 16px !important;
+              overflow: hidden !important;
+            }
+            #s6 .sum-item.s6-off {
+              display: none !important;
             }
             #s6 .sum-num-big {
-              font-size: 9px !important;
-              padding: 3px 9px !important;
+              font-size: 13px !important;
+              padding: 7px 14px !important;
             }
             #s6 .sum-text {
-              font-size: 12px !important;
-              line-height: 1.22 !important;
+              font-size: 16px !important;
+              line-height: 1.3 !important;
+            }
+            #s6 .s6-pager {
+              display: flex !important;
+              flex: 0 0 auto;
+              align-items: center;
+              justify-content: center;
+              gap: 18px;
+              width: 100%;
+              margin-top: 12px;
+            }
+            #s6 .s6-pager-btn {
+              width: 54px;
+              height: 54px;
+              min-width: 54px;
+              border: 1px solid rgba(255,255,255,.45);
+              border-radius: 50%;
+              background: #C21E56;
+              color: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 8px 18px rgba(0,0,0,.35);
+              padding: 0;
+              cursor: pointer;
+            }
+            #s6 .s6-pager-btn:disabled { opacity: .35; }
+            #s6 .s6-pager-btn svg {
+              width: 28px;
+              height: 28px;
+              fill: none;
+              stroke: #fff;
+              stroke-width: 2.8;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+            }
+            #s6 .s6-pager-count {
+              min-width: 52px;
+              text-align: center;
+              font-size: 16px;
+              font-weight: 800;
+              color: #fff;
             }
           }
 
-          @media (max-height: 780px) {
+          @media (max-height: 780px) and (min-width: 769px) {
             #s6 .sum-item { min-height: 168px; padding: 20px 18px !important; gap: 10px !important; }
             #s6 .sum-text { font-size: 15.5px !important; }
           }
@@ -10145,6 +10217,15 @@
               <div class="sum-text">Limites de Intervenção, Zoneamento Logístico (P.A.R.) e Corte Seguro</div>
               
             </div>
+          </div>
+          <div class="s6-pager" id="s6-pager">
+            <button type="button" class="s6-pager-btn" id="s6-prev" aria-label="Módulos anteriores" onclick="nr12SumPage(-1)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>
+            </button>
+            <span class="s6-pager-count" id="s6-count">1 / 3</span>
+            <button type="button" class="s6-pager-btn s6-pager-next" id="s6-next" aria-label="Próximos módulos" onclick="nr12SumPage(1)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </button>
           </div>
         </div>
         <div class="wave"><svg viewBox="0 0 1440 100" preserveAspectRatio="none">
@@ -15583,7 +15664,7 @@
             </div><!-- /slides -->
 
     <!-- NAV -->
-    <button id="nr12-scroll-hint" type="button" aria-label="Role para baixo para ver mais conteúdo" hidden>
+    <button id="nr12-scroll-hint" type="button" aria-label="Role para baixo para ver mais conteúdo">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
@@ -15608,6 +15689,39 @@
 
   <style>
     @media (max-width: 768px), (max-height: 560px) {
+      /* A página termina acima dos botões. Nada fica escondido atrás do Voltar/Avançar. */
+      #app:has(#nav:not(.nav-hidden)) #slides .slide {
+        bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+      }
+
+      #app:has(#nav:not(.nav-hidden)) #slides .content-area {
+        padding-bottom: 10px !important;
+        min-height: 0 !important;
+        justify-content: flex-start !important;
+        align-content: flex-start !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #s6 .sum-grid {
+        height: auto !important;
+        max-height: none !important;
+        gap: 10px !important;
+      }
+
+      #s6 .sum-item {
+        min-height: 0 !important;
+        flex: 0 0 auto !important;
+        padding: 14px 12px !important;
+        gap: 6px !important;
+      }
+
+      #s6 .sum-text {
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+      }
+
       #slides .content-area.nr12-allow-scroll {
         overflow-y: auto !important;
         overflow-x: hidden !important;
@@ -15616,24 +15730,30 @@
       }
     }
 
+    #s6-pager {
+      display: none;
+    }
+
     #nr12-scroll-hint {
       display: none;
       position: fixed;
       left: 50%;
-      bottom: 84px;
-      transform: translateX(-50%);
-      z-index: 940;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+      margin-left: -18px;
+      z-index: 960;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.55);
       border-radius: 50%;
-      background: rgba(194, 30, 86, 0.94);
+      background: #C21E56;
       color: #fff;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
       cursor: pointer;
-      animation: nr12-scroll-bob 1.15s ease-in-out infinite;
+      overflow: visible;
+      pointer-events: auto;
     }
 
     #nr12-scroll-hint.is-on {
@@ -15641,18 +15761,19 @@
     }
 
     #nr12-scroll-hint svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2.8;
       stroke-linecap: round;
       stroke-linejoin: round;
+      animation: nr12-scroll-bob 1.1s ease-in-out infinite;
     }
 
     @keyframes nr12-scroll-bob {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(7px); }
+      0%, 100% { transform: translateY(-1px); }
+      50% { transform: translateY(3px); }
     }
 
     /* ── Padronização de tamanho dos cards de jogo — igual ao Módulo 1 (#s2e) ── */
@@ -18235,6 +18356,9 @@
       buildDots();
       localStorage.setItem('nr17_current_slide', currentSlide);
 
+      if (newSlide.id === 's6' && typeof window.nr12RenderSumPage === 'function') {
+        window.nr12RenderSumPage();
+      }
       if (newSlide.id === 's-mod5-aproximacao' && typeof window.apxResetFlips === 'function') {
         window.apxResetFlips();
       }
@@ -18336,6 +18460,8 @@
         requestAnimationFrame(() => requestAnimationFrame(syncS3SlidesLayout));
       }
       initVimeoOnActiveSlide(newSlide);
+      const area = newSlide.querySelector('.content-area');
+      if (area) area.scrollTop = 0;
       handleSlideAccessibilityAudio();
       requestAnimationFrame(updateScrollHint);
       setTimeout(updateScrollHint, 350);
@@ -18351,14 +18477,45 @@
       return area || slide;
     }
 
+    function nr12RenderSumPage() {
+      const items = Array.from(document.querySelectorAll('#s6 .sum-item'));
+      if (!items.length) return;
+      const mobile = window.matchMedia('(max-width: 900px)').matches;
+      if (!mobile) {
+        items.forEach((el) => el.classList.remove('s6-off'));
+        return;
+      }
+      const pageSize = 2;
+      const pages = Math.max(1, Math.ceil(items.length / pageSize));
+      if (window.__s6Page == null) window.__s6Page = 0;
+      window.__s6Page = Math.max(0, Math.min(pages - 1, window.__s6Page));
+      const start = window.__s6Page * pageSize;
+      items.forEach((el, i) => {
+        el.classList.toggle('s6-off', i < start || i >= start + pageSize);
+      });
+      const prev = document.getElementById('s6-prev');
+      const next = document.getElementById('s6-next');
+      const count = document.getElementById('s6-count');
+      if (prev) prev.disabled = window.__s6Page <= 0;
+      if (next) next.disabled = window.__s6Page >= pages - 1;
+      if (count) count.textContent = (window.__s6Page + 1) + ' / ' + pages;
+    }
+
+    function nr12SumPage(dir) {
+      window.__s6Page = (window.__s6Page || 0) + dir;
+      nr12RenderSumPage();
+    }
+
+    window.nr12SumPage = nr12SumPage;
+    window.nr12RenderSumPage = nr12RenderSumPage;
+
     function updateScrollHint() {
       const hint = document.getElementById('nr12-scroll-hint');
       if (!hint) return;
       const slide = document.querySelector('.slide.active');
       const box = getSlideScrollBox(slide);
-      if (!box || !isMobileLayout()) {
+      if (!box || !isMobileLayout() || (slide && (slide.id === 's2b3' || slide.id === 's6'))) {
         hint.classList.remove('is-on');
-        hint.hidden = true;
         if (box) box.classList.remove('nr12-allow-scroll');
         return;
       }
@@ -18368,9 +18525,7 @@
       else box.classList.remove('nr12-allow-scroll');
 
       const remaining = box.scrollHeight - box.clientHeight - box.scrollTop;
-      const show = remaining > 28;
-      hint.classList.toggle('is-on', show);
-      hint.hidden = !show;
+      hint.classList.toggle('is-on', remaining > 28);
       hint._scrollBox = box;
     }
 
@@ -18388,7 +18543,9 @@
         if (box && event.target === box) updateScrollHint();
       }, true);
       window.addEventListener('resize', updateScrollHint);
+      window.addEventListener('resize', nr12RenderSumPage);
       window.addEventListener('orientationchange', () => setTimeout(updateScrollHint, 250));
+      window.addEventListener('orientationchange', () => setTimeout(nr12RenderSumPage, 250));
       const slides = document.getElementById('slides');
       if (slides && window.MutationObserver) {
         let timer = 0;
@@ -20347,6 +20504,7 @@
     bindNarrationEvents();
     bindScrollHint();
     updateScrollHint();
+    nr12RenderSumPage();
     document.addEventListener('DOMContentLoaded', () => {
       loadAudioManifest();
       initAtexSourcesCarousel();
@@ -22811,6 +22969,216 @@
     <img class="modal-content" id="modalImg">
   </div>
   <div id="notification">Termine de assistir o vídeo para avançar</div>
+
+  <style>
+    @media (max-width: 900px) {
+      #app #slides #s6 .wave {
+        display: none !important;
+      }
+
+      #app #slides #s6 .content-area,
+      #app:has(#nav:not(.nav-hidden)) #slides #s6 .content-area {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        padding: 6px 14px 8px !important;
+      }
+
+      #app #slides #s6 .sum-grid {
+        display: flex !important;
+        flex: 1 1 0 !important;
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        gap: 12px !important;
+        overflow: hidden !important;
+      }
+
+      #app #slides #s6 .sum-item {
+        display: flex !important;
+        flex: 1 1 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        height: auto !important;
+        padding: 16px 14px !important;
+        gap: 10px !important;
+        overflow: hidden !important;
+      }
+
+      #app #slides #s6 .sum-item.s6-off {
+        display: none !important;
+      }
+
+      #app #slides #s6 .sum-num-big {
+        font-size: 12px !important;
+        padding: 6px 14px !important;
+      }
+
+      #app #slides #s6 .sum-text {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+      }
+
+      #app #slides #s6 .s6-pager {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 18px !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+        padding: 0 !important;
+      }
+
+      #app #slides #s6 .s6-pager-btn {
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 52px !important;
+        border: 1px solid rgba(255, 255, 255, 0.45) !important;
+        border-radius: 50% !important;
+        background: #C21E56 !important;
+        color: #fff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35) !important;
+        padding: 0 !important;
+        cursor: pointer !important;
+      }
+
+      #app #slides #s6 .s6-pager-btn:disabled {
+        opacity: 0.35 !important;
+        cursor: default !important;
+      }
+
+      #app #slides #s6 .s6-pager-btn svg {
+        width: 26px !important;
+        height: 26px !important;
+        fill: none !important;
+        stroke: #fff !important;
+        stroke-width: 2.8 !important;
+        stroke-linecap: round !important;
+        stroke-linejoin: round !important;
+      }
+
+      #app #slides #s6 .s6-pager-count {
+        min-width: 52px !important;
+        text-align: center !important;
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        color: #fff !important;
+      }
+
+      #app:has(#nav:not(.nav-hidden)) #slides {
+        position: absolute !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+        height: auto !important;
+      }
+
+      #app #slides #s2b3 .top-bar {
+        padding: 8px 64px 0 12px !important;
+      }
+
+      #app #slides #s2b3 .slide-title {
+        font-size: 18px !important;
+        line-height: 1.15 !important;
+      }
+
+      #app #slides #s2b3 .slide-subtitle {
+        font-size: 11px !important;
+        margin-top: 2px !important;
+      }
+
+      #app #slides #s2b3 .wave {
+        display: none !important;
+      }
+
+      #app #slides #s2b3 .content-area,
+      #app:has(#nav:not(.nav-hidden)) #slides #s2b3 .content-area {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        overflow: hidden !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        padding: 2px 10px 6px !important;
+      }
+
+      #app #slides #s2b3 .nr12-tap-hint {
+        flex: 0 0 auto !important;
+        margin: 0 0 8px !important;
+        font-size: 12px !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 1fr 1fr !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        height: 100% !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: none !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip,
+      #app #slides #s2b3 .nr12-flip-inner {
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip {
+        animation: none !important;
+      }
+
+      #app #slides #s2b3 .nr12-tap-badge {
+        top: 6px !important;
+        right: 6px !important;
+        font-size: 8px !important;
+        padding: 2px 6px !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip-face {
+        padding: 22px 8px 8px !important;
+        gap: 4px !important;
+        overflow: hidden auto !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip-title {
+        font-size: 13px !important;
+        line-height: 1.15 !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip-ico {
+        font-size: 18px !important;
+      }
+
+      #app #slides #s2b3 .nr12-flip-hint,
+      #app #slides #s2b3 .nr12-flip-back p {
+        font-size: 11px !important;
+        line-height: 1.25 !important;
+      }
+    }
+  </style>
 
 </body>
 
