@@ -303,9 +303,9 @@
     {
       "index": 37,
       "id": "s-mod5-video",
-      "title": "class=\"slide-title\" style=\"margin-top:6px\">As 10 Regras de Ouro — Introdução",
+      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios",
       "file": "audios/s-mod5-video.mp3",
-      "text": "Vídeo. As 10 Regras de Ouro — Introdução. Conheça o conjunto de regras que orienta a operação segura da arqueadora.",
+      "text": "Vídeo. Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios. Respeite pictogramas e placas. Use luvas e calçado de segurança fechado em toda a jornada.",
       "audioReady": true
     },
     {
@@ -319,9 +319,9 @@
     {
       "index": 39,
       "id": "s-mod5-video2",
-      "title": "class=\"slide-title\" style=\"margin-top:6px\">Procedimentos de Operação Segura",
+      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 3 e 4: Área de Arqueação e Placa Térmica (>320°C)",
       "file": "audios/s-mod5-video2.mp3",
-      "text": "Vídeo. Procedimentos de Operação Segura. Alinhe o volume, passe a fita pela canaleta, aguarde a selagem sem expor as mãos e não inicie ciclo sem fardo na mesa.",
+      "text": "Vídeo. Regras 3 e 4: Área de Arqueação e Placa Térmica. Mantenha mãos e dedos fora da canaleta no ciclo ativo. Nunca toque na placa de soldagem acima de 320 graus.",
       "audioReady": true
     },
     {
@@ -335,9 +335,9 @@
     {
       "index": 41,
       "id": "s-mod5-video3",
-      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios",
+      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 5 e 6: Introdução da Fita e Integridade de Peças",
       "file": "audios/s-mod5-video3.mp3",
-      "text": "Vídeo. Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios. Respeite pictogramas e placas. Use luvas e calçado de segurança fechado em toda a jornada.",
+      "text": "Vídeo. Regras 5 e 6: Introdução da Fita e Integridade de Peças. Nunca introduza fita sem caixa ou fardo na mesa. Use só peças de reposição originais do fabricante.",
       "audioReady": true
     },
     {
@@ -351,9 +351,9 @@
     {
       "index": 43,
       "id": "s-mod5-video4",
-      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 6 a 10: Peças, Espula, Desligamento e Limpeza",
+      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 7 e 8: Mola da Espula e Desligamento Seguro",
       "file": "audios/s-mod5-video4.mp3",
-      "text": "Vídeo. Regras 6 a 10: peças originais, mola da espula, desligamento, proibição de jato de água e manual sempre acessível.",
+      "text": "Vídeo. Regras 7 e 8: Mola da Espula e Desligamento Seguro. Cuidado com a força da mola ao abrir a espula. Ao terminar, desligue a chave geral e desconecte a tomada.",
       "audioReady": true
     },
     {
@@ -367,9 +367,9 @@
     {
       "index": 45,
       "id": "s-mod5-video5",
-      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 3 e 4: Área de Arqueação e Placa Térmica (>320°C)",
+      "title": "class=\"slide-title\" style=\"margin-top:6px\">Regras 9 e 10: Risco Elétrico na Limpeza e Acesso ao Manual",
       "file": "audios/s-mod5-video5.mp3",
-      "text": "Vídeo. Regras 3 e 4: Área de Arqueação e Placa Térmica. Mantenha mãos e dedos fora da canaleta no ciclo ativo. Nunca toque na placa de soldagem acima de 320 graus.",
+      "text": "Vídeo. Regras 9 e 10: Risco Elétrico na Limpeza e Acesso ao Manual. Proibido jato de água na máquina. Mantenha o manual visível e próximo da arqueadora.",
       "audioReady": true
     },
     {

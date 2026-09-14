@@ -88,23 +88,23 @@ const NARRATION_OVERRIDES = {
   's-mod5':
     'Início do Módulo 5. As 10 Regras de Ouro e Procedimentos de Operação Segura.',
   's-mod5-video':
-    'Vídeo. As 10 Regras de Ouro — Introdução. Conheça o conjunto de regras que orienta a operação segura da arqueadora.',
+    'Vídeo. Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios. Respeite pictogramas e placas. Use luvas e calçado de segurança fechado em toda a jornada.',
   's-mod5-match':
     'Interação da introdução. As 10 regras vêm do manual do fabricante, servem para operar sem acidente, valem para todo operador e nenhum atalho vale o risco.',
   's-mod5-video2':
-    'Vídeo. Procedimentos de Operação Segura. Alinhe o volume, passe a fita pela canaleta, aguarde a selagem sem expor as mãos e não inicie ciclo sem fardo na mesa.',
+    'Vídeo. Regras 3 e 4: Área de Arqueação e Placa Térmica. Mantenha mãos e dedos fora da canaleta no ciclo ativo. Nunca toque na placa de soldagem acima de 320 graus.',
   's-mod5-picking':
     'Procedimento de operação segura do vídeo. Alinhar o volume, passar a fita, aguardar a selagem sem expor as mãos, não operar em vazio e seguir a sequência oficial.',
   's-mod5-video3':
-    'Vídeo. Regras 1 e 2: Instruções Visuais e EPIs Obrigatórios. Respeite pictogramas e placas. Use luvas e calçado de segurança fechado em toda a jornada.',
+    'Vídeo. Regras 5 e 6: Introdução da Fita e Integridade de Peças. Nunca introduza fita sem caixa ou fardo na mesa. Use só peças de reposição originais do fabricante.',
   's-mod5-aproximacao':
     'Regras 1 e 2 do vídeo. Ler o manual, respeitar pictogramas e placas, usar luvas e calçado de segurança fechado.',
   's-mod5-video4':
-    'Vídeo. Regras 6 a 10: peças originais, mola da espula, desligamento, proibição de jato de água e manual sempre acessível.',
+    'Vídeo. Regras 7 e 8: Mola da Espula e Desligamento Seguro. Cuidado com a força da mola ao abrir a espula. Ao terminar, desligue a chave geral e desconecte a tomada.',
   's-mod5-doca':
     'Regras 6 a 10 do vídeo. Peças originais. Cuidado com a mola da espula. Desligar e desconectar ao terminar. Proibido jato de água. Manual sempre próximo da máquina.',
   's-mod5-video5':
-    'Vídeo. Regras 3 e 4: Área de Arqueação e Placa Térmica. Mantenha mãos e dedos fora da canaleta no ciclo ativo. Nunca toque na placa de soldagem acima de 320 graus.',
+    'Vídeo. Regras 9 e 10: Risco Elétrico na Limpeza e Acesso ao Manual. Proibido jato de água na máquina. Mantenha o manual visível e próximo da arqueadora.',
   's-mod5-game': null,
   's-mod6':
     'Início do Módulo 6. Limites de Intervenção, Zoneamento Logístico P.A.R. e Corte Seguro.',
