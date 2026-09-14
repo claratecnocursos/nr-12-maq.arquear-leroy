@@ -15689,16 +15689,18 @@
 
   <style>
     @media (max-width: 768px), (max-height: 560px) {
-      /* A página termina acima dos botões. Nada fica escondido atrás do Voltar/Avançar. */
+      /* O fundo vai até o fim da tela. Só o conteúdo fica acima dos botões. */
       #app:has(#nav:not(.nav-hidden)) #slides .slide {
-        bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+        bottom: 0 !important;
       }
 
       #app:has(#nav:not(.nav-hidden)) #slides .content-area {
         padding-bottom: 10px !important;
         min-height: 0 !important;
-        justify-content: flex-start !important;
-        align-content: flex-start !important;
+        justify-content: center !important;
+        justify-content: safe center !important;
+        align-content: center !important;
+        align-content: safe center !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
@@ -15737,22 +15739,23 @@
     #nr12-scroll-hint {
       display: none;
       position: fixed;
-      left: 50%;
-      bottom: calc(108px + env(safe-area-inset-bottom, 0px));
-      margin-left: -18px;
+      left: 0;
+      right: 0;
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      margin: 0 auto;
       z-index: 960;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       padding: 0;
-      border: 1px solid rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: 50%;
       background: #C21E56;
       color: #fff;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
       cursor: pointer;
-      overflow: visible;
+      overflow: hidden;
       pointer-events: auto;
     }
 
@@ -15761,19 +15764,15 @@
     }
 
     #nr12-scroll-hint svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
+      display: block;
       fill: none;
-      stroke: currentColor;
-      stroke-width: 2.8;
+      stroke: #fff;
+      stroke-width: 2.6;
       stroke-linecap: round;
       stroke-linejoin: round;
-      animation: nr12-scroll-bob 1.1s ease-in-out infinite;
-    }
-
-    @keyframes nr12-scroll-bob {
-      0%, 100% { transform: translateY(-1px); }
-      50% { transform: translateY(3px); }
+      animation: none;
     }
 
     /* ── Padronização de tamanho dos cards de jogo — igual ao Módulo 1 (#s2e) ── */
@@ -18514,7 +18513,8 @@
       if (!hint) return;
       const slide = document.querySelector('.slide.active');
       const box = getSlideScrollBox(slide);
-      if (!box || !isMobileLayout() || (slide && (slide.id === 's2b3' || slide.id === 's6'))) {
+      const ownJump = slide && slide.querySelector('.ax-jump-btn, .rz-jump-btn, .pc-jump-btn');
+      if (!box || !isMobileLayout() || (slide && (slide.id === 's2b3' || slide.id === 's6')) || ownJump) {
         hint.classList.remove('is-on');
         if (box) box.classList.remove('nr12-allow-scroll');
         return;
@@ -22983,7 +22983,8 @@
         flex: 1 1 0 !important;
         min-height: 0 !important;
         overflow: hidden !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
+        justify-content: safe center !important;
         align-items: stretch !important;
         padding: 6px 14px 8px !important;
       }
@@ -23086,8 +23087,26 @@
         top: 0 !important;
         right: 0 !important;
         left: 0 !important;
-        bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+        bottom: 0 !important;
         height: auto !important;
+      }
+
+      #app:has(#nav:not(.nav-hidden)) #slides .slide {
+        bottom: 0 !important;
+      }
+
+      #app:has(#nav:not(.nav-hidden)) #slides .wave {
+        bottom: 0 !important;
+        height: 90px !important;
+      }
+
+      #app:has(#nav:not(.nav-hidden)) #slides .content-area {
+        flex: 1 1 auto !important;
+        align-self: stretch !important;
+        max-height: none !important;
+        height: auto !important;
+        margin-bottom: 0 !important;
+        padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
       }
 
       #app #slides #s2b3 .top-bar {
@@ -23117,33 +23136,34 @@
         width: 100% !important;
         max-width: none !important;
         overflow: hidden !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
+        justify-content: safe center !important;
         align-items: stretch !important;
-        padding: 2px 10px 6px !important;
+        padding: 8px 12px 12px !important;
       }
 
       #app #slides #s2b3 .nr12-tap-hint {
         flex: 0 0 auto !important;
-        margin: 0 0 8px !important;
+        margin: 0 0 10px !important;
         font-size: 12px !important;
       }
 
       #app #slides #s2b3 .nr12-flip-grid {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        grid-template-rows: 1fr 1fr !important;
-        flex: 1 1 0 !important;
+        grid-template-rows: auto auto !important;
+        flex: 0 1 auto !important;
         min-height: 0 !important;
-        height: 100% !important;
-        gap: 8px !important;
+        height: auto !important;
+        gap: 10px !important;
         width: 100% !important;
         max-width: none !important;
       }
 
       #app #slides #s2b3 .nr12-flip,
       #app #slides #s2b3 .nr12-flip-inner {
-        min-height: 0 !important;
-        height: 100% !important;
+        min-height: 132px !important;
+        height: 22vh !important;
       }
 
       #app #slides #s2b3 .nr12-flip {
@@ -23237,6 +23257,35 @@
       #app #slides #s-mod1 .mod-intro-area {
         order: 1 !important;
         padding-bottom: 4px !important;
+      }
+
+      /* Todas as telas no celular: conteúdo no meio, não grudado no topo. */
+      #app:has(#nav:not(.nav-hidden)) #slides .slide:not(#s6) .content-area {
+        justify-content: center !important;
+        justify-content: safe center !important;
+        align-content: center !important;
+        align-content: safe center !important;
+      }
+
+      #notification {
+        left: 12px !important;
+        right: 12px !important;
+        width: auto !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        transform: translateY(150px) !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        line-height: 1.3 !important;
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+        border-radius: 16px !important;
+        bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
+        text-align: center !important;
+      }
+
+      #notification.show {
+        transform: translateY(0) !important;
       }
     }
   </style>
