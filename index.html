@@ -15583,6 +15583,11 @@
             </div><!-- /slides -->
 
     <!-- NAV -->
+    <button id="nr12-scroll-hint" type="button" aria-label="Role para baixo para ver mais conteúdo" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
     <div id="nav">
       <button class="nav-btn" id="btn-back" onclick="goTo(currentSlide-1)" disabled>
         <svg viewBox="0 0 20 20" fill="currentColor">
@@ -15602,6 +15607,54 @@
   </main><!-- /app -->
 
   <style>
+    @media (max-width: 768px), (max-height: 560px) {
+      #slides .content-area.nr12-allow-scroll {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        justify-content: flex-start !important;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    #nr12-scroll-hint {
+      display: none;
+      position: fixed;
+      left: 50%;
+      bottom: 84px;
+      transform: translateX(-50%);
+      z-index: 940;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      background: rgba(194, 30, 86, 0.94);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      animation: nr12-scroll-bob 1.15s ease-in-out infinite;
+    }
+
+    #nr12-scroll-hint.is-on {
+      display: flex;
+    }
+
+    #nr12-scroll-hint svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes nr12-scroll-bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(7px); }
+    }
+
     /* ── Padronização de tamanho dos cards de jogo — igual ao Módulo 1 (#s2e) ── */
     #s-mod6-game .m6g-wrap.is-play,
     #s-mod7-game .m7g-wrap.is-play {
@@ -18284,6 +18337,67 @@
       }
       initVimeoOnActiveSlide(newSlide);
       handleSlideAccessibilityAudio();
+      requestAnimationFrame(updateScrollHint);
+      setTimeout(updateScrollHint, 350);
+    }
+
+    function isMobileLayout() {
+      return window.matchMedia('(max-width: 768px), (max-height: 560px)').matches;
+    }
+
+    function getSlideScrollBox(slide) {
+      if (!slide) return null;
+      const area = slide.querySelector('.content-area');
+      return area || slide;
+    }
+
+    function updateScrollHint() {
+      const hint = document.getElementById('nr12-scroll-hint');
+      if (!hint) return;
+      const slide = document.querySelector('.slide.active');
+      const box = getSlideScrollBox(slide);
+      if (!box || !isMobileLayout()) {
+        hint.classList.remove('is-on');
+        hint.hidden = true;
+        if (box) box.classList.remove('nr12-allow-scroll');
+        return;
+      }
+
+      const overflow = box.scrollHeight - box.clientHeight;
+      if (overflow > 28) box.classList.add('nr12-allow-scroll');
+      else box.classList.remove('nr12-allow-scroll');
+
+      const remaining = box.scrollHeight - box.clientHeight - box.scrollTop;
+      const show = remaining > 28;
+      hint.classList.toggle('is-on', show);
+      hint.hidden = !show;
+      hint._scrollBox = box;
+    }
+
+    function bindScrollHint() {
+      const hint = document.getElementById('nr12-scroll-hint');
+      if (!hint || hint.dataset.bound === '1') return;
+      hint.dataset.bound = '1';
+      hint.addEventListener('click', () => {
+        const box = hint._scrollBox || getSlideScrollBox(document.querySelector('.slide.active'));
+        if (!box) return;
+        box.scrollBy({ top: Math.max(160, box.clientHeight * 0.55), behavior: 'smooth' });
+      });
+      document.addEventListener('scroll', (event) => {
+        const box = hint._scrollBox;
+        if (box && event.target === box) updateScrollHint();
+      }, true);
+      window.addEventListener('resize', updateScrollHint);
+      window.addEventListener('orientationchange', () => setTimeout(updateScrollHint, 250));
+      const slides = document.getElementById('slides');
+      if (slides && window.MutationObserver) {
+        let timer = 0;
+        const observer = new MutationObserver(() => {
+          clearTimeout(timer);
+          timer = setTimeout(updateScrollHint, 180);
+        });
+        observer.observe(slides, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style'] });
+      }
     }
 
     // Keyboard nav
@@ -20231,6 +20345,8 @@
     updateNextButton();
     updateSimulationButton();
     bindNarrationEvents();
+    bindScrollHint();
+    updateScrollHint();
     document.addEventListener('DOMContentLoaded', () => {
       loadAudioManifest();
       initAtexSourcesCarousel();
