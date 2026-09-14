@@ -23177,6 +23177,67 @@
         font-size: 11px !important;
         line-height: 1.25 !important;
       }
+
+      /* Início de módulo: fundo inteiro, texto no centro, ilustração embaixo */
+      #app:has(#nav:not(.nav-hidden)) #slides .mod-intro-slide {
+        bottom: 0 !important;
+        justify-content: center !important;
+        background: transparent !important;
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+      }
+
+      #app #slides .mod-intro-slide .wave {
+        display: none !important;
+      }
+
+      #app #slides .mod-intro-slide .content-area,
+      #app:has(#nav:not(.nav-hidden)) #slides .mod-intro-slide .content-area {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        overflow: hidden !important;
+        padding: 64px 18px 8px !important;
+      }
+
+      #app #slides .mod-intro-slide .mod-intro-inner {
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      #app #slides .mod-intro-slide .mod-intro-title {
+        font-size: clamp(42px, 13vw, 64px) !important;
+      }
+
+      #app #slides .mod-intro-slide .mod-intro-sub {
+        font-size: 16px !important;
+        line-height: 1.35 !important;
+        margin-top: 12px !important;
+        max-width: 92vw !important;
+      }
+
+      #app #slides #s-mod1 .mod1-presenter {
+        position: relative !important;
+        left: auto !important;
+        bottom: auto !important;
+        order: 2 !important;
+        align-self: flex-start !important;
+        height: 28vh !important;
+        max-height: 240px !important;
+        max-width: 46vw !important;
+        margin: 0 0 2px 4px !important;
+        object-position: left bottom !important;
+        z-index: 4 !important;
+      }
+
+      #app #slides #s-mod1 .mod-intro-area {
+        order: 1 !important;
+        padding-bottom: 4px !important;
+      }
     }
   </style>
 
