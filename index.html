@@ -12827,19 +12827,32 @@
             background: rgba(46, 204, 113, 0.14); border-color: rgba(46, 204, 113, 0.5); color: #7dffa8;
           }
           #s-mod4-match .m4m-board {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto repeat(5, minmax(72px, auto));
+            column-gap: 16px;
+            row-gap: 10px;
+            width: 100%;
+            align-items: stretch;
           }
           #s-mod4-match .m4m-col {
-            display: flex; flex-direction: column; gap: 8px;
+            display: grid;
+            grid-template-rows: subgrid;
+            grid-row: 1 / -1;
+            min-width: 0;
+            align-items: stretch;
           }
           #s-mod4-match .m4m-col-title {
             font-family: var(--font-h); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-            color: rgba(255,255,255,.55); margin: 0 0 2px; padding-left: 4px;
+            color: rgba(255,255,255,.55); margin: 0; padding-left: 4px; align-self: end;
           }
           #s-mod4-match .m4m-item {
             position: relative; cursor: pointer; text-align: left;
+            box-sizing: border-box;
+            display: flex; flex-direction: column; justify-content: center;
+            width: 100%; min-height: 0; height: 100%; align-self: stretch;
             background: rgba(255,255,255,.04); border: 2px dashed rgba(194, 30, 86, .5);
-            border-radius: 14px; padding: 12px 14px; color: #fff;
+            border-radius: 14px; padding: 12px 28px 12px 14px; color: #fff;
             font-family: var(--font-p); font-size: 14px; line-height: 1.4;
             transition: border-color .2s, background .2s, transform .15s, box-shadow .2s;
             animation: nr12TapPulse 1.8s ease-in-out infinite;
@@ -12872,8 +12885,19 @@
             30%,50%,70% { transform: translateX(-4px); } 40%,60% { transform: translateX(4px); }
           }
           @media (max-width: 700px) {
-            #s-mod4-match .m4m-board { grid-template-columns: 1fr; gap: 10px; }
-            #s-mod4-match .m4m-item { font-size: 13px; padding: 11px 12px; }
+            #s-mod4-match .m4m-board {
+              grid-template-columns: 1fr;
+              grid-template-rows: none;
+              gap: 10px;
+            }
+            #s-mod4-match .m4m-col {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              grid-row: auto;
+              grid-template-rows: none;
+            }
+            #s-mod4-match .m4m-item { font-size: 13px; padding: 11px 12px; height: auto; min-height: 72px; }
           }
         </style>
 
@@ -13141,7 +13165,7 @@
 
         <div class="content-area" style="max-width:980px;margin:0 auto;padding:8px 16px 20px;display:flex;flex-direction:column;align-items:center;">
           <p class="nr12-tap-hint" data-nr12-hint style="margin-top:14px;">👆 Toque nos dois modelos para liberar o Avançar</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;">
+          <div class="m4-models" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;width:100%;min-width:0;box-sizing:border-box;">
             <div class="nr12-tap-card req-item" onclick="nr12TapCard(this)" role="button" tabindex="0" style="background:linear-gradient(160deg,#2a1830,#140810);border:2px dashed rgba(194,30,86,.55);border-radius:18px;padding:20px;position:relative;">
               <span class="nr12-tap-badge">Toque</span>
               <h3 style="margin:0 0 10px;font-family:var(--font-h);color:#fff;font-size:17px;padding-right:52px;">🏢 THR-TK-90 (fechada)</h3>
@@ -13168,6 +13192,68 @@
             }
             @media(max-width:480px){
               #s-mod4-redzone .nr12-tap-grid{grid-template-columns:1fr!important;}
+            }
+            @media (max-width: 900px) {
+              #s-mod4-redzone {
+                overflow-x: hidden;
+                max-width: 100%;
+              }
+              #s-mod4-redzone .top-bar {
+                padding: 8px 158px 0 12px !important;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+              }
+              #s-mod4-redzone .slide-title {
+                font-size: clamp(18px, 5.2vw, 26px) !important;
+                line-height: 1.15;
+                max-width: 100%;
+                overflow-wrap: anywhere;
+              }
+              #s-mod4-redzone > .content-area {
+                padding: 4px 10px calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+                max-width: 100% !important;
+                width: 100%;
+                min-width: 0;
+                box-sizing: border-box !important;
+                overflow-x: hidden !important;
+              }
+              #s-mod4-redzone .nr12-tap-hint {
+                max-width: 100%;
+                box-sizing: border-box;
+                margin-top: 8px !important;
+                padding: 8px 10px;
+                font-size: 12px;
+                overflow-wrap: anywhere;
+              }
+              #s-mod4-redzone .m4-models {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+                max-width: 100%;
+                min-width: 0;
+              }
+              #s-mod4-redzone .m4-models .nr12-tap-card {
+                min-width: 0;
+                max-width: 100%;
+                padding: 12px 8px 10px !important;
+                overflow: hidden;
+                box-sizing: border-box;
+              }
+              #s-mod4-redzone .m4-models h3 {
+                font-size: 13px !important;
+                padding-right: 42px !important;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+              }
+              #s-mod4-redzone .m4-models ul {
+                padding-left: 14px !important;
+                font-size: 12px !important;
+              }
+              #s-mod4-redzone .m4-models li {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+              }
             }
           </style>
         </div>
@@ -13696,16 +13782,33 @@
           #s-mod5-match .m5m-hint.is-complete {
             background: rgba(46, 204, 113, 0.14); border-color: rgba(46, 204, 113, 0.5); color: #7dffa8;
           }
-          #s-mod5-match .m5m-board { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
-          #s-mod5-match .m5m-col { display: flex; flex-direction: column; gap: 8px; }
+          #s-mod5-match .m5m-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto repeat(5, minmax(72px, auto));
+            column-gap: 16px;
+            row-gap: 10px;
+            width: 100%;
+            align-items: stretch;
+          }
+          #s-mod5-match .m5m-col {
+            display: grid;
+            grid-template-rows: subgrid;
+            grid-row: 1 / -1;
+            min-width: 0;
+            align-items: stretch;
+          }
           #s-mod5-match .m5m-col-title {
             font-family: var(--font-h); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-            color: rgba(255,255,255,.55); margin: 0 0 2px; padding-left: 4px;
+            color: rgba(255,255,255,.55); margin: 0; padding-left: 4px; align-self: end;
           }
           #s-mod5-match .m5m-item {
             position: relative; cursor: pointer; text-align: left;
+            box-sizing: border-box;
+            display: flex; flex-direction: column; justify-content: center;
+            width: 100%; min-height: 0; height: 100%; align-self: stretch;
             background: rgba(255,255,255,.04); border: 2px dashed rgba(194, 30, 86, .5);
-            border-radius: 14px; padding: 12px 14px; color: #fff;
+            border-radius: 14px; padding: 12px 28px 12px 14px; color: #fff;
             font-family: var(--font-p); font-size: 14px; line-height: 1.4;
             transition: border-color .2s, background .2s, transform .15s, box-shadow .2s;
             animation: nr12TapPulse 1.8s ease-in-out infinite;
@@ -13736,8 +13839,19 @@
             30%,50%,70% { transform: translateX(-4px); } 40%,60% { transform: translateX(4px); }
           }
           @media (max-width: 700px) {
-            #s-mod5-match .m5m-board { grid-template-columns: 1fr; gap: 10px; }
-            #s-mod5-match .m5m-item { font-size: 13px; padding: 11px 12px; }
+            #s-mod5-match .m5m-board {
+              grid-template-columns: 1fr;
+              grid-template-rows: none;
+              gap: 10px;
+            }
+            #s-mod5-match .m5m-col {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              grid-row: auto;
+              grid-template-rows: none;
+            }
+            #s-mod5-match .m5m-item { font-size: 13px; padding: 11px 12px; height: auto; min-height: 72px; }
           }
         </style>
 
@@ -16918,6 +17032,29 @@
       }
     }
 
+    function nr12EqualizeMatchCards(boardSel, itemSel) {
+      var board = document.querySelector(boardSel);
+      if (!board || board.getBoundingClientRect().width < 40) return;
+      var cols = board.children;
+      if (!cols || cols.length < 2) return;
+      var left = cols[0].querySelectorAll(itemSel);
+      var right = cols[1].querySelectorAll(itemSel);
+      var n = Math.max(left.length, right.length);
+      var i;
+      for (i = 0; i < n; i++) {
+        if (left[i]) { left[i].style.height = ''; left[i].style.minHeight = ''; }
+        if (right[i]) { right[i].style.height = ''; right[i].style.minHeight = ''; }
+      }
+      for (i = 0; i < n; i++) {
+        var h = 72;
+        if (left[i]) h = Math.max(h, Math.ceil(left[i].getBoundingClientRect().height));
+        if (right[i]) h = Math.max(h, Math.ceil(right[i].getBoundingClientRect().height));
+        var px = h + 'px';
+        if (left[i]) { left[i].style.height = px; left[i].style.minHeight = px; }
+        if (right[i]) { right[i].style.height = px; right[i].style.minHeight = px; }
+      }
+    }
+
     function initM4Match() {
       var leftCol = document.getElementById('m4m-left');
       var rightCol = document.getElementById('m4m-right');
@@ -16950,6 +17087,9 @@
       m4mSelected = null;
       m4mUpdateStatus('Selecione um componente à esquerda', false);
       if (typeof updateNextButton === 'function') updateNextButton();
+      requestAnimationFrame(function () {
+        nr12EqualizeMatchCards('#s-mod4-match .m4m-board', '.m4m-item');
+      });
     }
 
     window.m4mSelectLeft = m4mSelectLeft;
@@ -17073,6 +17213,9 @@
       m5mSelected = null;
       m5mUpdateStatus('Selecione uma ideia à esquerda', false);
       if (typeof updateNextButton === 'function') updateNextButton();
+      requestAnimationFrame(function () {
+        nr12EqualizeMatchCards('#s-mod5-match .m5m-board', '.m5m-item');
+      });
     }
 
     window.m5mSelectLeft = m5mSelectLeft;
@@ -18391,9 +18534,11 @@
       }
       if (newSlide.id === 's-mod4-match' && typeof initM4Match === 'function') {
         initM4Match();
+        setTimeout(function () { nr12EqualizeMatchCards('#s-mod4-match .m4m-board', '.m4m-item'); }, 60);
       }
       if (newSlide.id === 's-mod5-match' && typeof initM5Match === 'function') {
         initM5Match();
+        setTimeout(function () { nr12EqualizeMatchCards('#s-mod5-match .m5m-board', '.m5m-item'); }, 60);
       }
       if (newSlide.id === 's-mod2-motoristas') {
         if (typeof window.axResetJump === 'function') window.axResetJump();
@@ -18544,6 +18689,10 @@
         if (box && event.target === box) updateScrollHint();
       }, true);
       window.addEventListener('resize', updateScrollHint);
+      window.addEventListener('resize', function () {
+        nr12EqualizeMatchCards('#s-mod4-match .m4m-board', '.m4m-item');
+        nr12EqualizeMatchCards('#s-mod5-match .m5m-board', '.m5m-item');
+      });
       window.addEventListener('resize', nr12RenderSumPage);
       window.addEventListener('orientationchange', () => setTimeout(updateScrollHint, 250));
       window.addEventListener('orientationchange', () => setTimeout(nr12RenderSumPage, 250));
@@ -23288,6 +23437,43 @@
       #notification.show {
         transform: translateY(0) !important;
       }
+    }
+
+    /* Conteúdo não pode vazar por baixo do Voltar/Avançar. */
+    #app:has(#nav:not(.nav-hidden)) #s-mod5-doca > .content-area,
+    #app:has(#nav:not(.nav-hidden)) #s-mod6-guia > .content-area {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      width: 100% !important;
+      max-width: 920px !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      align-content: safe center !important;
+      justify-content: safe center !important;
+      padding: 6px 16px calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+      gap: 10px !important;
+    }
+
+    #s-mod5-doca > .content-area .nr12-tap-card,
+    #s-mod6-guia > .content-area .nr12-tap-card {
+      padding: 12px 16px !important;
+    }
+
+    #s-mod5-doca > .content-area .nr12-tap-card h3,
+    #s-mod6-guia > .content-area .nr12-tap-card h3 {
+      font-size: 15px !important;
+      margin: 0 0 4px !important;
+    }
+
+    #s-mod5-doca > .content-area .nr12-tap-card p,
+    #s-mod6-guia > .content-area .nr12-tap-card li {
+      font-size: 13.5px !important;
+      line-height: 1.4 !important;
+    }
+
+    #s-mod6-guia > .content-area .nr12-tap-card ul {
+      margin: 0 !important;
     }
   </style>
 
