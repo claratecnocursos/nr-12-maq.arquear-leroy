@@ -4737,7 +4737,9 @@
     .btn-start {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      width: 100%;
       background: linear-gradient(180deg, #E42866 0%, #C21E56 100%);
       color: var(--white);
       font-family: var(--font-h);
@@ -4750,7 +4752,7 @@
       cursor: pointer;
       transition: all 0.25s;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 22px rgba(228, 40, 102, 0.28);
-      align-self: flex-start;
+      align-self: stretch;
       white-space: nowrap;
     }
 
@@ -4762,34 +4764,33 @@
 
     .s1-actions {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      width: 100%;
     }
 
-    #s1-listen {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      background: rgba(0, 0, 0, 0.45);
-      color: #fff;
-      display: inline-flex;
+    .s1-tutorial {
+      display: flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.38);
+      color: #fff;
+      font-family: var(--font-h);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      flex-shrink: 0;
     }
 
-    #s1-listen:hover,
-    #s1-listen.is-on {
-      background: rgba(194, 30, 86, 0.85);
-      border-color: rgba(255, 255, 255, 0.45);
-    }
-
-    #s1-listen svg {
-      width: 22px;
-      height: 22px;
+    .s1-tutorial svg {
+      width: 16px;
+      height: 16px;
       fill: currentColor;
     }
 
@@ -9955,10 +9956,11 @@
                 </svg>
                 INICIAR O TREINAMENTO
               </button>
-              <button id="s1-listen" type="button" aria-pressed="false" title="Ouvir esta página" aria-label="Ouvir esta página">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z" />
+              <button type="button" class="s1-tutorial" onclick="openTutorialModal()">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <polygon points="6,4 16,10 6,16" />
                 </svg>
+                Ver tutorial
               </button>
             </div>
           </div>
@@ -18224,13 +18226,12 @@
     }
 
     function isSlideCompleted(idx) {
+      if (simulationMode) return true;
+
       const slide = getTrainingSlides()[idx];
       if (!slide) return true;
 
-      // Interações (caixinhas) bloqueiam mesmo com modo simulação ligado
       if (slideHasPendingInteractions(slide)) return false;
-
-      if (simulationMode) return true;
 
       if (slide.id === 's2e') { // Quiz — Módulo 1
         return mod1_game_done;
@@ -18285,8 +18286,8 @@
     function goTo(idx, force = false) {
       if (idx < 0 || idx >= TOTAL) return;
 
-      // Bloqueia avanço (e pulo por dots) enquanto houver caixinhas pendentes
-      if (idx > currentSlide && !force) {
+      // Com simulação ativa, avança sem exigir vídeo, jogo ou caixinha.
+      if (idx > currentSlide && !force && !simulationMode) {
         if (!isSlideCompleted(currentSlide)) {
           showNotification();
           updateNextButton();
