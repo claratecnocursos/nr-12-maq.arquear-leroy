@@ -7,12 +7,16 @@
  * token Bearer e então chama POST /api/tts.
  *
  * Uso:
- *   node generate-audios-proxy.js s2b s2b2 s2b3 s2c s2d s2e
- *   node generate-audios-proxy.js --slide=s2b
+ *   node generate-audios-proxy.js --all
+ *   node generate-audios-proxy.js s2b s2c
+ *
+ * O token Bearer pode vir de TTS_BEARER_TOKEN ou da constante
+ * NR12_TTS_BEARER_TOKEN em index.html. Sem token, tenta login.
  */
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { buildManifest, writeManifest, MANIFEST_PATH } = require('./audio-data');
 
 const API_BASE = 'https://texttospeech.escolatecnocursos.cloud';
@@ -64,42 +68,78 @@ async function synthesize(text, token) {
   return Buffer.from(await res.arrayBuffer());
 }
 
+function readTokenFromHtml() {
+  const htmlPath = path.join(__dirname, 'index.html');
+  if (!fs.existsSync(htmlPath)) return '';
+  const match = fs.readFileSync(htmlPath, 'utf8').match(/NR12_TTS_BEARER_TOKEN = '([^']+)'/);
+  return match ? match[1] : '';
+}
+
+async function synthesizeWithRetry(text, token) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      return await synthesize(text, token);
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 1500 * attempt));
+    }
+  }
+  throw lastError;
+}
+
 async function main() {
   loadEnvFile();
 
-  const ids = process.argv.slice(2).map((a) => a.replace(/^--slide=/, ''));
-  if (!ids.length) {
-    console.error('Informe ao menos um id de slide. Ex.: node generate-audios-proxy.js s2b s2c');
-    process.exit(1);
-  }
-  if (!process.env.AUTH_USERNAME || !process.env.AUTH_PASSWORD) {
-    console.error('Defina AUTH_USERNAME e AUTH_PASSWORD no .env');
-    process.exit(1);
-  }
+  const args = process.argv.slice(2);
+  const all = args.includes('--all') || args.length === 0;
+  const ids = args.filter((a) => a !== '--all').map((a) => a.replace(/^--slide=/, ''));
 
   const manifest = buildManifest();
+  const slides = all
+    ? manifest.slides
+    : ids.map((id) => manifest.slides.find((s) => s.id === id)).filter(Boolean);
 
-  console.log('Autenticando no proxy...');
-  const token = await login();
-  console.log('Login ok.\n');
+  if (!slides.length) {
+    console.error('Nenhum slide para gerar.');
+    process.exit(1);
+  }
 
-  for (const id of ids) {
-    const slide = manifest.slides.find((s) => s.id === id);
-    if (!slide) {
-      console.error(`✗ ${id} — não encontrado no manifesto (verifique o id do slide)`);
-      continue;
+  let token = process.env.TTS_BEARER_TOKEN || readTokenFromHtml();
+  if (!token) {
+    if (!process.env.AUTH_USERNAME || !process.env.AUTH_PASSWORD) {
+      console.error('Defina o Bearer ou AUTH_USERNAME/AUTH_PASSWORD.');
+      process.exit(1);
     }
+    console.log('Autenticando no proxy...');
+    token = await login();
+    console.log('Login ok.');
+  }
 
-    process.stdout.write(`▶ ${id} (${slide.text.length} chars)... `);
+  console.log(`Gerando ${slides.length} áudio(s) em audios/`);
+  const hashPath = path.join(__dirname, 'audios', '.text-hashes.json');
+  let hashes = {};
+  if (fs.existsSync(hashPath)) {
+    try { hashes = JSON.parse(fs.readFileSync(hashPath, 'utf8')); } catch { hashes = {}; }
+  }
+
+  const total = slides.length;
+
+  for (const slide of slides) {
+    const spoken = `Página ${slide.index + 1} de ${total}. ${slide.text}`;
+    process.stdout.write(`▶ ${slide.id} (${spoken.length} chars)... `);
     try {
-      const audio = await synthesize(slide.text, token);
+      const audio = await synthesizeWithRetry(spoken, token);
       const outputPath = path.join(__dirname, slide.file);
       fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, audio);
-      console.log(`ok (${audio.length} bytes) -> ${slide.file}`);
+      hashes[slide.id] = crypto.createHash('sha256').update(slide.text, 'utf8').digest('hex');
+      fs.writeFileSync(hashPath, JSON.stringify(hashes, null, 2), 'utf8');
+      console.log(`ok (${audio.length} bytes)`);
     } catch (error) {
       console.log('falhou');
       console.error(`  ${error.message}`);
+      process.exitCode = 1;
     }
   }
 
